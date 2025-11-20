@@ -98,7 +98,7 @@ jobs:
             DESIMODEL_DATA: branches/test-0.19
             DESIMODEL: ${{ github.workspace }}/desimodel
             DESITARGET_VERSION: main
-            CXX_FLAGS: -Wno-unused-result -Wsign-compare -DNDEBUG -g -fwrapv -O3 -Wall --coverage -fPIC
+            CXXFLAGS: -Wno-unused-result -Wsign-compare -DNDEBUG -g -fwrapv -O3 -Wall --coverage -fPIC
 
         steps:
             - name: Cancel Previous Runs
