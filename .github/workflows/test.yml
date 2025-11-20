@@ -136,6 +136,7 @@ jobs:
               run: |
                   ls build/temp.linux-x86_64-cpython-310/src/
                   ls -r build/
+                  find . -name "*.gcda"
                 # lcov --capture --directory build/temp*/src/ --output-file coverage_cpp.info
             - name: Upload coverage
               uses: coverallsapp/github-action@v2
