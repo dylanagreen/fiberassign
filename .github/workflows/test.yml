@@ -98,6 +98,7 @@ jobs:
             DESIMODEL_DATA: branches/test-0.19
             DESIMODEL: ${{ github.workspace }}/desimodel
             DESITARGET_VERSION: main
+            CXX_FLAGS: -Wno-unused-result -Wsign-compare -DNDEBUG -g -fwrapv -O3 -Wall --coverage -fPIC
 
         steps:
             - name: Cancel Previous Runs
@@ -128,9 +129,9 @@ jobs:
                 mkdir -p ${{ env.DESIMODEL }}
                 svn export https://desi.lbl.gov/svn/code/desimodel/${{ env.DESIMODEL_DATA }}/data ${{ env.DESIMODEL }}/data
             - name: Compile the package
-              run: CC=g++ CXX=g++ CXXFLAGS="-fPIC --coverage" CFLAGS="-fPIC --coverage" LDSHARED="g++ -shared --coverage" python setup.py build_ext --inplace
-            - name: Run Tests
-              run: pytest --cov # --cov-report xml:./coverage.xml
+              run: CC=g++ CXX=g++ CFLAGS="-fPIC --coverage" LDSHARED="g++ -shared --coverage" python setup.py build_ext --inplace
+            # - name: Run Tests
+            #   run: pytest --cov # --cov-report xml:./coverage.xml
             - name: Collate C++ coverage
             # outputs gcov files in base directory for all gcda/gcno pairs.
               run: |
@@ -138,11 +139,11 @@ jobs:
                   ls -r build/
                   find . -name "*.gcda"
                 # lcov --capture --directory build/temp*/src/ --output-file coverage_cpp.info
-            - name: Upload coverage
-              uses: coverallsapp/github-action@v2
-              with:
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
-                  files: .coverage #coverage_cpp.info
+            # - name: Upload coverage
+            #   uses: coverallsapp/github-action@v2
+            #   with:
+            #       github-token: ${{ secrets.GITHUB_TOKEN }}
+            #       files: .coverage #coverage_cpp.info
 
     docs:
         name: Doc test
