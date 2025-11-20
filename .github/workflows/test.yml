@@ -134,7 +134,9 @@ jobs:
               run: pytest --cov # --cov-report xml:./coverage.xml
             - name: Collate C++ coverage
             # outputs gcov files in base directory for all gcda/gcno pairs.
-              run: lcov --capture --directory build/temp*/src/ --output-file coverage_cpp.info --ignore-errors mismatch
+              run: |
+                lcov --capture --directory build/temp*/src/ --output-file coverage.info --ignore-errors mismatch
+                lcov --remove coverage.info '/usr/include/*' 'src/pybind11/*' -o coverage_cpp.info
             - name: Upload coverage
               uses: coverallsapp/github-action@v2
               with:
