@@ -134,15 +134,20 @@ jobs:
               run: pytest --cov # --cov-report xml:./coverage.xml
             - name: Collate C++ coverage
             # outputs gcov files in base directory for all gcda/gcno pairs.
-              run:  lcov --capture --directory build/temp*/src/ --output-file coverage_cpp.info
-                  # ls build/temp.linux-x86_64-cpython-310/src/
-                  # ls -r build/
-                  # find . -name "*.gcda"
+              run:  |
+                g++ --version
+                gcov --version
+                lcov --capture --directory build/temp*/src/ --output-file coverage_cpp.info
+
             - name: Upload coverage
               uses: coverallsapp/github-action@v2
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   files: .coverage coverage_cpp.info
+
+                  # ls build/temp.linux-x86_64-cpython-310/src/
+                  # ls -r build/
+                  # find . -name "*.gcda"
 
     docs:
         name: Doc test
