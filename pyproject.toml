@@ -3,5 +3,5 @@ requires = ["setuptools",
             "wheel"]
 build-backend = 'setuptools.build_meta'
 
-[tool.coverage.run]
-omit = ["test/*"]
+[tool.coverage.report]
+omit = ["py/fiberassign/test/*"]
