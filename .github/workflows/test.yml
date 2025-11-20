@@ -130,7 +130,7 @@ jobs:
             - name: Compile the package
               run: CC=g++ CXX=g++ CFLAGS="-fPIC --coverage" LDSHARED="g++ -shared --coverage" python setup.py build_ext --inplace
             - name: Run Tests
-              run: pytest --cov-report xml:coverage.xml
+              run: pytest --cov # --cov-report xml:./coverage.xml
             - name: Collate C++ coverage
               run: ls build/temp.linux-x86_64-cpython-310/src/ # outputs gcov files in base directory for all gcda/gcno pairs.
                 # lcov --capture --directory build/temp*/src/ --output-file coverage_cpp.info
@@ -138,7 +138,7 @@ jobs:
               uses: coverallsapp/github-action@v2
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
-                  files: coverage.xml #coverage_cpp.info
+                  files: .coverage #coverage_cpp.info
 
     docs:
         name: Doc test
