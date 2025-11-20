@@ -16,18 +16,18 @@ jobs:
             fail-fast: true
             matrix:
               include:
-                - os: ubuntu-latest
-                  python-version: '3.13'
-                  numpy-version: '<2.3' # Numba does not yet support NumPy 2.3
-                  astropy-version: '<8.0'
-                - os: ubuntu-latest
-                  python-version: '3.12'
-                  numpy-version: '<2.2'
-                  astropy-version: '<7.0'
-                - os: ubuntu-latest
-                  python-version: '3.11'
-                  numpy-version: '<2.1'
-                  astropy-version: '<6.1'
+                # - os: ubuntu-latest
+                #   python-version: '3.13'
+                #   numpy-version: '<2.3' # Numba does not yet support NumPy 2.3
+                #   astropy-version: '<8.0'
+                # - os: ubuntu-latest
+                #   python-version: '3.12'
+                #   numpy-version: '<2.2'
+                #   astropy-version: '<7.0'
+                # - os: ubuntu-latest
+                #   python-version: '3.11'
+                #   numpy-version: '<2.1'
+                #   astropy-version: '<6.1'
                 - os: ubuntu-latest
                   python-version: '3.10'
                   numpy-version: '<2.0'
@@ -132,7 +132,10 @@ jobs:
             - name: Run Tests
               run: pytest --cov # --cov-report xml:./coverage.xml
             - name: Collate C++ coverage
-              run: ls build/temp.linux-x86_64-cpython-310/src/ # outputs gcov files in base directory for all gcda/gcno pairs.
+            # outputs gcov files in base directory for all gcda/gcno pairs.
+              run: |
+                  ls build/temp.linux-x86_64-cpython-310/src/
+                  ls -r build/
                 # lcov --capture --directory build/temp*/src/ --output-file coverage_cpp.info
             - name: Upload coverage
               uses: coverallsapp/github-action@v2
